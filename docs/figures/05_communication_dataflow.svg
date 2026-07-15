@@ -1,0 +1,260 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="1" dy="1" stdDeviation="2" flood-opacity="0.10"/>
+    </filter>
+    <marker id="arrD" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#37474f"/>
+    </marker>
+    <marker id="arrBlue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#1565c0"/>
+    </marker>
+    <marker id="arrTeal" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#00695c"/>
+    </marker>
+    <marker id="arrOrange" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#e65100"/>
+    </marker>
+    <marker id="arrPurple" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#6a1b9a"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="700" fill="#fafafa" rx="8"/>
+
+  <!-- Title -->
+  <text x="500" y="36" text-anchor="middle" font-size="22" font-weight="700" fill="#1a1a2e" letter-spacing="0.5">Communication &amp; Data Flow</text>
+  <text x="500" y="55" text-anchor="middle" font-size="12" fill="#636e72">Interface Protocols | Signal Types | Data Rates</text>
+
+  <!-- ==================== OPERATOR ZONE ==================== -->
+  <rect x="40" y="75" width="180" height="110" rx="8" fill="#ffffff" stroke="#43a047" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="40" y="75" width="180" height="26" rx="8" fill="#43a047"/>
+  <rect x="40" y="95" width="180" height="6" fill="#43a047"/>
+  <text x="130" y="93" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">FlySky i6 TX</text>
+  <text x="130" y="120" text-anchor="middle" font-size="10" fill="#2e7d32">6 Channels</text>
+  <text x="60" y="140" font-size="9" fill="#37474f">CH1: Steering</text>
+  <text x="60" y="153" font-size="9" fill="#37474f">CH2: Throttle</text>
+  <text x="60" y="166" font-size="9" fill="#37474f">CH5: Arm/Disarm</text>
+  <text x="60" y="179" font-size="9" fill="#78909c">CH6: Mode (opt)</text>
+
+  <!-- ==================== FLYSKY RX ==================== -->
+  <rect x="40" y="240" width="180" height="80" rx="6" fill="#ffffff" stroke="#00897b" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="40" y="240" width="180" height="24" rx="6" fill="#00897b"/>
+  <rect x="40" y="258" width="180" height="6" fill="#00897b"/>
+  <text x="130" y="258" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">FlySky RX</text>
+  <text x="130" y="283" text-anchor="middle" font-size="10" fill="#00695c">iBUS: UART 115200</text>
+  <text x="130" y="298" text-anchor="middle" font-size="9" fill="#4db6ac">32-byte frame | 14ch</text>
+  <text x="130" y="311" text-anchor="middle" font-size="9" fill="#80cbc4">Built-in failsafe</text>
+
+  <!-- TX to RX wireless -->
+  <line x1="130" y1="185" x2="130" y2="240" stroke="#2e7d32" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrTeal)"/>
+  <text x="140" y="215" font-size="9" font-weight="600" fill="#2e7d32">2.4 GHz</text>
+
+  <!-- ==================== STM32 (CENTER) ==================== -->
+  <rect x="320" y="160" width="310" height="310" rx="10" fill="#ffffff" stroke="#1565c0" stroke-width="3" filter="url(#shadow)"/>
+  <rect x="320" y="160" width="310" height="30" rx="10" fill="#1565c0"/>
+  <rect x="320" y="183" width="310" height="7" fill="#1565c0"/>
+  <text x="475" y="182" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">STM32F767ZI  -  Vehicle Control Unit</text>
+
+  <!-- Internal blocks -->
+  <rect x="340" y="200" width="120" height="40" rx="4" fill="#e8eaf6" stroke="#7986cb" stroke-width="1.2"/>
+  <text x="400" y="218" text-anchor="middle" font-size="10" font-weight="600" fill="#283593">RC Parser</text>
+  <text x="400" y="232" text-anchor="middle" font-size="8" fill="#5c6bc0">iBUS decode</text>
+
+  <rect x="340" y="250" width="120" height="40" rx="4" fill="#e8eaf6" stroke="#7986cb" stroke-width="1.2"/>
+  <text x="400" y="268" text-anchor="middle" font-size="10" font-weight="600" fill="#283593">State Machine</text>
+  <text x="400" y="282" text-anchor="middle" font-size="8" fill="#5c6bc0">Safety authority</text>
+
+  <rect x="340" y="300" width="120" height="40" rx="4" fill="#e8eaf6" stroke="#7986cb" stroke-width="1.2"/>
+  <text x="400" y="318" text-anchor="middle" font-size="10" font-weight="600" fill="#283593">Mixer</text>
+  <text x="400" y="332" text-anchor="middle" font-size="8" fill="#5c6bc0">Diff-drive + ramp</text>
+
+  <rect x="490" y="200" width="120" height="40" rx="4" fill="#e8eaf6" stroke="#7986cb" stroke-width="1.2"/>
+  <text x="550" y="218" text-anchor="middle" font-size="10" font-weight="600" fill="#283593">Pi Serial</text>
+  <text x="550" y="232" text-anchor="middle" font-size="8" fill="#5c6bc0">Packet protocol</text>
+
+  <rect x="490" y="250" width="120" height="40" rx="4" fill="#fce4ec" stroke="#e57373" stroke-width="1.2"/>
+  <text x="550" y="268" text-anchor="middle" font-size="10" font-weight="600" fill="#c62828">Safety</text>
+  <text x="550" y="282" text-anchor="middle" font-size="8" fill="#e53935">Watchdog + faults</text>
+
+  <rect x="490" y="300" width="120" height="40" rx="4" fill="#e8eaf6" stroke="#7986cb" stroke-width="1.2"/>
+  <text x="550" y="318" text-anchor="middle" font-size="10" font-weight="600" fill="#283593">Motor Driver</text>
+  <text x="550" y="332" text-anchor="middle" font-size="8" fill="#5c6bc0">PWM + GPIO</text>
+
+  <!-- Battery ADC -->
+  <rect x="340" y="352" width="120" height="32" rx="4" fill="#fff8e1" stroke="#ffb300" stroke-width="1.2"/>
+  <text x="400" y="372" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100">Battery ADC</text>
+
+  <!-- E-Stop input -->
+  <rect x="490" y="352" width="120" height="32" rx="4" fill="#ffebee" stroke="#e57373" stroke-width="1.2"/>
+  <text x="550" y="372" text-anchor="middle" font-size="10" font-weight="600" fill="#c62828">E-Stop Input</text>
+
+  <!-- Telemetry out -->
+  <rect x="340" y="395" width="270" height="30" rx="4" fill="#e0f7fa" stroke="#00acc1" stroke-width="1.2"/>
+  <text x="475" y="414" text-anchor="middle" font-size="10" font-weight="600" fill="#006064">Telemetry Broadcast @ 10-20 Hz</text>
+
+  <!-- Status outputs -->
+  <rect x="340" y="435" width="120" height="25" rx="3" fill="#f3e5f5" stroke="#ce93d8" stroke-width="1"/>
+  <text x="400" y="452" text-anchor="middle" font-size="9" font-weight="600" fill="#6a1b9a">LED + Buzzer</text>
+
+  <!-- ==================== RX to STM32 ==================== -->
+  <line x1="220" y1="280" x2="320" y2="220" stroke="#00695c" stroke-width="2.5" marker-end="url(#arrTeal)"/>
+  <!-- Protocol label on line -->
+  <rect x="238" y="235" width="85" height="32" rx="4" fill="#e0f2f1" stroke="#4db6ac" stroke-width="1"/>
+  <text x="280" y="252" text-anchor="middle" font-size="9" font-weight="700" fill="#00695c">iBUS</text>
+  <text x="280" y="263" text-anchor="middle" font-size="8" fill="#26a69a">UART 115200</text>
+
+  <!-- ==================== RASPBERRY PI 5 ==================== -->
+  <rect x="720" y="120" width="240" height="200" rx="8" fill="#ffffff" stroke="#1976d2" stroke-width="2" stroke-dasharray="7,3" filter="url(#shadow)"/>
+  <rect x="720" y="120" width="240" height="28" rx="8" fill="#90caf9"/>
+  <rect x="720" y="142" width="240" height="6" fill="#90caf9"/>
+  <text x="840" y="142" text-anchor="middle" font-size="13" font-weight="700" fill="#0d47a1">Raspberry Pi 5</text>
+  <text x="840" y="162" text-anchor="middle" font-size="10" fill="#1976d2" font-style="italic">V2+ Autonomy Computer</text>
+
+  <!-- Pi internal blocks -->
+  <rect x="740" y="175" width="100" height="28" rx="3" fill="#e3f2fd" stroke="#64b5f6" stroke-width="1"/>
+  <text x="790" y="193" text-anchor="middle" font-size="9" fill="#1565c0">Serial Bridge</text>
+
+  <rect x="855" y="175" width="90" height="28" rx="3" fill="#e3f2fd" stroke="#64b5f6" stroke-width="1"/>
+  <text x="900" y="193" text-anchor="middle" font-size="9" fill="#1565c0">Camera</text>
+
+  <rect x="740" y="212" width="100" height="28" rx="3" fill="#e3f2fd" stroke="#64b5f6" stroke-width="1"/>
+  <text x="790" y="230" text-anchor="middle" font-size="9" fill="#1565c0">EKF (V3)</text>
+
+  <rect x="855" y="212" width="90" height="28" rx="3" fill="#e3f2fd" stroke="#64b5f6" stroke-width="1"/>
+  <text x="900" y="230" text-anchor="middle" font-size="9" fill="#1565c0">Vision (V4)</text>
+
+  <rect x="740" y="250" width="100" height="28" rx="3" fill="#e3f2fd" stroke="#64b5f6" stroke-width="1"/>
+  <text x="790" y="268" text-anchor="middle" font-size="9" fill="#1565c0">Nav Ctrl (V4)</text>
+
+  <rect x="855" y="250" width="90" height="28" rx="3" fill="#e3f2fd" stroke="#64b5f6" stroke-width="1"/>
+  <text x="900" y="268" text-anchor="middle" font-size="9" fill="#1565c0">Logger</text>
+
+  <rect x="740" y="288" width="205" height="22" rx="3" fill="#e8f5e9" stroke="#66bb6a" stroke-width="1"/>
+  <text x="842" y="303" text-anchor="middle" font-size="9" fill="#2e7d32">ROS 2 (V2+)</text>
+
+  <!-- ==================== STM32 <-> Pi Communication ==================== -->
+  <!-- STM32 to Pi -->
+  <line x1="630" y1="210" x2="720" y2="185" stroke="#1565c0" stroke-width="2" marker-end="url(#arrBlue)"/>
+  <!-- Pi to STM32 -->
+  <line x1="720" y1="200" x2="630" y2="225" stroke="#1565c0" stroke-width="2" marker-end="url(#arrBlue)"/>
+
+  <!-- Protocol box between them -->
+  <rect x="635" y="160" width="80" height="75" rx="5" fill="#e3f2fd" stroke="#1976d2" stroke-width="1.5"/>
+  <text x="675" y="178" text-anchor="middle" font-size="9" font-weight="700" fill="#0d47a1">USB Serial</text>
+  <text x="675" y="192" text-anchor="middle" font-size="8" fill="#1565c0">115200 baud</text>
+  <line x1="645" y1="197" x2="725" y2="197" stroke="#bbdefb" stroke-width="0.8"/>
+  <text x="675" y="210" text-anchor="middle" font-size="7" fill="#42a5f5">0xAA 0x55</text>
+  <text x="675" y="220" text-anchor="middle" font-size="7" fill="#42a5f5">+ CRC16</text>
+  <text x="675" y="232" text-anchor="middle" font-size="7" fill="#78909c">Watchdog</text>
+
+  <!-- ==================== ZS-X11H CONTROLLERS ==================== -->
+  <rect x="320" y="500" width="200" height="80" rx="6" fill="#ffffff" stroke="#ef6c00" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="320" y="500" width="200" height="24" rx="6" fill="#ef6c00"/>
+  <rect x="320" y="518" width="200" height="6" fill="#ef6c00"/>
+  <text x="420" y="518" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">ZS-X11H LEFT</text>
+  <text x="420" y="543" text-anchor="middle" font-size="10" fill="#e65100">BLDC Controller</text>
+  <text x="340" y="558" font-size="8" fill="#37474f">PWM: 1-5 kHz speed</text>
+  <text x="340" y="570" font-size="8" fill="#37474f">DIR: GPIO direction</text>
+
+  <rect x="560" y="500" width="200" height="80" rx="6" fill="#ffffff" stroke="#ef6c00" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="560" y="500" width="200" height="24" rx="6" fill="#ef6c00"/>
+  <rect x="560" y="518" width="200" height="6" fill="#ef6c00"/>
+  <text x="660" y="518" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">ZS-X11H RIGHT</text>
+  <text x="660" y="543" text-anchor="middle" font-size="10" fill="#e65100">BLDC Controller</text>
+  <text x="580" y="558" font-size="8" fill="#37474f">STOP: enable/disable</text>
+  <text x="580" y="570" font-size="8" fill="#37474f">BRAKE: regen brake</text>
+
+  <!-- STM32 to ZS-X11H -->
+  <line x1="400" y1="470" x2="400" y2="500" stroke="#e65100" stroke-width="2" marker-end="url(#arrOrange)"/>
+  <line x1="550" y1="470" x2="620" y2="500" stroke="#e65100" stroke-width="2" marker-end="url(#arrOrange)"/>
+
+  <!-- Signal labels -->
+  <rect x="345" y="475" width="50" height="18" rx="3" fill="#fff3e0" stroke="#ffb74d" stroke-width="0.8"/>
+  <text x="370" y="488" text-anchor="middle" font-size="8" font-weight="600" fill="#e65100">GPIO</text>
+
+  <rect x="555" y="475" width="50" height="18" rx="3" fill="#fff3e0" stroke="#ffb74d" stroke-width="0.8"/>
+  <text x="580" y="488" text-anchor="middle" font-size="8" font-weight="600" fill="#e65100">GPIO</text>
+
+  <!-- ==================== MOTORS ==================== -->
+  <rect x="340" y="610" width="160" height="50" rx="22" fill="#f3e5f5" stroke="#8e24aa" stroke-width="2" filter="url(#shadow)"/>
+  <text x="420" y="635" text-anchor="middle" font-size="13" font-weight="700" fill="#4a148c">Left BLDC</text>
+  <text x="420" y="650" text-anchor="middle" font-size="9" fill="#8e24aa">Hall A/B/C + 3-phase</text>
+
+  <rect x="580" y="610" width="160" height="50" rx="22" fill="#f3e5f5" stroke="#8e24aa" stroke-width="2" filter="url(#shadow)"/>
+  <text x="660" y="635" text-anchor="middle" font-size="13" font-weight="700" fill="#4a148c">Right BLDC</text>
+  <text x="660" y="650" text-anchor="middle" font-size="9" fill="#8e24aa">Hall A/B/C + 3-phase</text>
+
+  <!-- Controller to Motor -->
+  <line x1="420" y1="580" x2="420" y2="610" stroke="#6a1b9a" stroke-width="2.5" marker-end="url(#arrPurple)"/>
+  <line x1="660" y1="580" x2="660" y2="610" stroke="#6a1b9a" stroke-width="2.5" marker-end="url(#arrPurple)"/>
+
+  <!-- Hall feedback (future) -->
+  <line x1="440" y1="610" x2="440" y2="590" stroke="#ce93d8" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrPurple)"/>
+  <line x1="680" y1="610" x2="680" y2="590" stroke="#ce93d8" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrPurple)"/>
+  <text x="455" y="600" font-size="7" fill="#ce93d8">Hall FB</text>
+  <text x="695" y="600" font-size="7" fill="#ce93d8">Hall FB</text>
+
+  <!-- ==================== E-STOP + Battery Sensor ==================== -->
+  <!-- E-Stop physical -->
+  <rect x="40" y="380" width="120" height="45" rx="5" fill="#ffcdd2" stroke="#c62828" stroke-width="2"/>
+  <text x="100" y="403" text-anchor="middle" font-size="11" font-weight="700" fill="#b71c1c">E-STOP SW</text>
+  <text x="100" y="418" text-anchor="middle" font-size="8" fill="#e53935">NC Contact</text>
+
+  <line x1="160" y1="402" x2="320" y2="370" stroke="#c62828" stroke-width="1.5" marker-end="url(#arrD)"/>
+  <text x="220" y="378" font-size="8" fill="#c62828">GPIO (status)</text>
+
+  <!-- Battery sensor -->
+  <rect x="40" y="440" width="120" height="45" rx="5" fill="#fff8e1" stroke="#ffa000" stroke-width="1.5"/>
+  <text x="100" y="462" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100">Batt Divider</text>
+  <text x="100" y="477" text-anchor="middle" font-size="8" fill="#ffa000">120k / 10k</text>
+
+  <line x1="160" y1="462" x2="340" y2="368" stroke="#ffa000" stroke-width="1.2" marker-end="url(#arrOrange)"/>
+  <text x="230" y="420" font-size="8" fill="#ffa000">ADC</text>
+
+  <!-- ==================== SERIAL PROTOCOL DETAIL ==================== -->
+  <rect x="720" y="360" width="240" height="195" rx="6" fill="#ffffff" stroke="#546e7a" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="720" y="360" width="240" height="24" rx="6" fill="#546e7a"/>
+  <rect x="720" y="378" width="240" height="6" fill="#546e7a"/>
+  <text x="840" y="378" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">Serial Protocol Detail</text>
+
+  <!-- Packet format -->
+  <text x="735" y="400" font-size="9" font-weight="600" fill="#37474f">Packet Format:</text>
+  <rect x="735" y="405" width="30" height="16" rx="2" fill="#bbdefb" stroke="#90caf9" stroke-width="0.8"/>
+  <text x="750" y="416" text-anchor="middle" font-size="7" fill="#0d47a1">0xAA</text>
+  <rect x="768" y="405" width="30" height="16" rx="2" fill="#bbdefb" stroke="#90caf9" stroke-width="0.8"/>
+  <text x="783" y="416" text-anchor="middle" font-size="7" fill="#0d47a1">0x55</text>
+  <rect x="801" y="405" width="25" height="16" rx="2" fill="#c8e6c9" stroke="#81c784" stroke-width="0.8"/>
+  <text x="813" y="416" text-anchor="middle" font-size="7" fill="#2e7d32">LEN</text>
+  <rect x="829" y="405" width="22" height="16" rx="2" fill="#fff9c4" stroke="#fff176" stroke-width="0.8"/>
+  <text x="840" y="416" text-anchor="middle" font-size="7" fill="#f57f17">ID</text>
+  <rect x="854" y="405" width="24" height="16" rx="2" fill="#f3e5f5" stroke="#ce93d8" stroke-width="0.8"/>
+  <text x="866" y="416" text-anchor="middle" font-size="7" fill="#6a1b9a">SEQ</text>
+  <rect x="881" y="405" width="38" height="16" rx="2" fill="#e0e0e0" stroke="#bdbdbd" stroke-width="0.8"/>
+  <text x="900" y="416" text-anchor="middle" font-size="7" fill="#424242">DATA</text>
+  <rect x="922" y="405" width="28" height="16" rx="2" fill="#ffccbc" stroke="#ff8a65" stroke-width="0.8"/>
+  <text x="936" y="416" text-anchor="middle" font-size="7" fill="#bf360c">CRC</text>
+
+  <!-- Messages table -->
+  <text x="735" y="440" font-size="9" font-weight="600" fill="#37474f">Pi &rarr; STM32:</text>
+  <text x="745" y="455" font-size="8" fill="#1565c0">0x01  HEARTBEAT         10 Hz</text>
+  <text x="745" y="468" font-size="8" fill="#1565c0">0x02  CMD_VEL (v, w)    20 Hz</text>
+  <text x="745" y="481" font-size="8" fill="#1565c0">0x03  SET_MODE          on change</text>
+
+  <line x1="735" y1="487" x2="945" y2="487" stroke="#eceff1" stroke-width="0.8"/>
+
+  <text x="735" y="500" font-size="9" font-weight="600" fill="#37474f">STM32 &rarr; Pi:</text>
+  <text x="745" y="515" font-size="8" fill="#00695c">0x81  STATUS            10 Hz</text>
+  <text x="745" y="528" font-size="8" fill="#00695c">0x82  MOTOR_FB          20 Hz</text>
+  <text x="745" y="541" font-size="8" fill="#00695c">0x83  RC_CHANNELS       20 Hz</text>
+
+  <!-- ==================== LEGEND ==================== -->
+  <rect x="40" y="650" width="260" height="36" rx="4" fill="#f5f5f5" stroke="#e0e0e0" stroke-width="1"/>
+  <line x1="60" y1="668" x2="80" y2="668" stroke="#00695c" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="88" y="672" font-size="9" fill="#37474f">Wireless</text>
+  <line x1="140" y1="668" x2="160" y2="668" stroke="#1565c0" stroke-width="2"/>
+  <text x="168" y="672" font-size="9" fill="#37474f">Serial</text>
+  <line x1="210" y1="668" x2="230" y2="668" stroke="#e65100" stroke-width="2"/>
+  <text x="238" y="672" font-size="9" fill="#37474f">GPIO/PWM</text>
+</svg>

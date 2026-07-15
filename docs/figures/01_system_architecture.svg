@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 820" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="1" dy="1" stdDeviation="2" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2d3436"/>
+    </marker>
+    <marker id="arrowG" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#00695c"/>
+    </marker>
+    <marker id="arrowB" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1565c0"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="820" fill="#fafafa" rx="8"/>
+
+  <!-- Title -->
+  <text x="550" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#1a1a2e" letter-spacing="0.5">AgriBot UGV - System Architecture</text>
+  <text x="550" y="58" text-anchor="middle" font-size="12" fill="#636e72">V1 Teleoperation | Differential Drive | 36V BLDC</text>
+
+  <!-- ==================== OPERATOR LAYER ==================== -->
+  <rect x="30" y="80" width="1040" height="90" rx="6" fill="#e8f5e9" stroke="#66bb6a" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="50" y="100" font-size="11" font-weight="600" fill="#2e7d32" letter-spacing="1">OPERATOR</text>
+
+  <!-- FlySky TX -->
+  <rect x="60" y="110" width="180" height="48" rx="5" fill="#ffffff" stroke="#43a047" stroke-width="1.5"/>
+  <text x="150" y="131" text-anchor="middle" font-size="13" font-weight="600" fill="#1b5e20">FlySky i6 TX</text>
+  <text x="150" y="147" text-anchor="middle" font-size="10" fill="#4caf50">6CH | 2.4 GHz AFHDS 2A</text>
+
+  <!-- E-STOP Button -->
+  <rect x="300" y="110" width="150" height="48" rx="5" fill="#ffffff" stroke="#e53935" stroke-width="2"/>
+  <text x="375" y="131" text-anchor="middle" font-size="13" font-weight="700" fill="#c62828">E-STOP</text>
+  <text x="375" y="147" text-anchor="middle" font-size="10" fill="#e53935">NC relay | Motor bus</text>
+
+  <!-- Operator PC -->
+  <rect x="510" y="110" width="180" height="48" rx="5" fill="#ffffff" stroke="#43a047" stroke-width="1.5"/>
+  <text x="600" y="131" text-anchor="middle" font-size="13" font-weight="600" fill="#1b5e20">Operator PC</text>
+  <text x="600" y="147" text-anchor="middle" font-size="10" fill="#4caf50">SSH / Monitor (optional)</text>
+
+  <!-- ==================== COMPUTE LAYER ==================== -->
+  <rect x="30" y="195" width="1040" height="165" rx="6" fill="#e3f2fd" stroke="#42a5f5" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="50" y="215" font-size="11" font-weight="600" fill="#1565c0" letter-spacing="1">COMPUTE</text>
+
+  <!-- FlySky RX -->
+  <rect x="60" y="230" width="160" height="55" rx="5" fill="#ffffff" stroke="#1976d2" stroke-width="1.5"/>
+  <text x="140" y="253" text-anchor="middle" font-size="13" font-weight="600" fill="#0d47a1">FlySky RX</text>
+  <text x="140" y="270" text-anchor="middle" font-size="10" fill="#1976d2">iBUS / PWM out</text>
+
+  <!-- STM32 -->
+  <rect x="290" y="225" width="260" height="125" rx="6" fill="#ffffff" stroke="#1565c0" stroke-width="2.5"/>
+  <rect x="290" y="225" width="260" height="28" rx="6" fill="#1565c0"/>
+  <rect x="290" y="245" width="260" height="8" rx="0" fill="#1565c0"/>
+  <text x="420" y="245" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">STM32F767ZI Nucleo-144</text>
+  <text x="420" y="268" text-anchor="middle" font-size="11" font-weight="600" fill="#0d47a1">Vehicle Control Unit</text>
+  <text x="310" y="288" font-size="10" fill="#37474f">- State machine (ARM/DISARM/FAULT)</text>
+  <text x="310" y="303" font-size="10" fill="#37474f">- Diff-drive mixer + accel limiter</text>
+  <text x="310" y="318" font-size="10" fill="#37474f">- Safety watchdog + RC failsafe</text>
+  <text x="310" y="333" font-size="10" fill="#37474f">- Battery monitor (ADC)</text>
+
+  <!-- Raspberry Pi 5 -->
+  <rect x="620" y="225" width="240" height="125" rx="6" fill="#ffffff" stroke="#1976d2" stroke-width="2" stroke-dasharray="6,3"/>
+  <rect x="620" y="225" width="240" height="28" rx="6" fill="#90caf9"/>
+  <rect x="620" y="245" width="240" height="8" rx="0" fill="#90caf9"/>
+  <text x="740" y="245" text-anchor="middle" font-size="13" font-weight="700" fill="#0d47a1">Raspberry Pi 5</text>
+  <text x="740" y="268" text-anchor="middle" font-size="11" font-weight="600" fill="#1565c0">Autonomy Computer (V2+)</text>
+  <text x="640" y="288" font-size="10" fill="#78909c">V1: logging + camera test</text>
+  <text x="640" y="303" font-size="10" fill="#78909c">V2: cmd_vel via serial</text>
+  <text x="640" y="318" font-size="10" fill="#78909c">V3: EKF + odometry</text>
+  <text x="640" y="333" font-size="10" fill="#78909c">V4: vision crop-row nav</text>
+
+  <!-- Camera -->
+  <rect x="920" y="230" width="130" height="55" rx="5" fill="#ffffff" stroke="#1976d2" stroke-width="1.5"/>
+  <text x="985" y="253" text-anchor="middle" font-size="13" font-weight="600" fill="#0d47a1">NV Camera</text>
+  <text x="985" y="270" text-anchor="middle" font-size="10" fill="#1976d2">Night Vision RGB</text>
+
+  <!-- ==================== POWER ELECTRONICS LAYER ==================== -->
+  <rect x="30" y="385" width="1040" height="130" rx="6" fill="#fff3e0" stroke="#ffa726" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="50" y="405" font-size="11" font-weight="600" fill="#e65100" letter-spacing="1">POWER ELECTRONICS</text>
+
+  <!-- ZS-X11H Left -->
+  <rect x="120" y="420" width="200" height="80" rx="5" fill="#ffffff" stroke="#ef6c00" stroke-width="2"/>
+  <text x="220" y="445" text-anchor="middle" font-size="13" font-weight="600" fill="#bf360c">ZS-X11H LEFT</text>
+  <text x="220" y="462" text-anchor="middle" font-size="10" fill="#ef6c00">BLDC Controller | 400W</text>
+  <text x="220" y="478" text-anchor="middle" font-size="10" fill="#ef6c00">PWM + DIR + STOP + BRAKE</text>
+  <text x="220" y="492" text-anchor="middle" font-size="9" fill="#9e9e9e">6-60V | 16A rated | 20A peak</text>
+
+  <!-- ZS-X11H Right -->
+  <rect x="420" y="420" width="200" height="80" rx="5" fill="#ffffff" stroke="#ef6c00" stroke-width="2"/>
+  <text x="520" y="445" text-anchor="middle" font-size="13" font-weight="600" fill="#bf360c">ZS-X11H RIGHT</text>
+  <text x="520" y="462" text-anchor="middle" font-size="10" fill="#ef6c00">BLDC Controller | 400W</text>
+  <text x="520" y="478" text-anchor="middle" font-size="10" fill="#ef6c00">PWM + DIR + STOP + BRAKE</text>
+  <text x="520" y="492" text-anchor="middle" font-size="9" fill="#9e9e9e">6-60V | 16A rated | 20A peak</text>
+
+  <!-- Buck Converters -->
+  <rect x="700" y="420" width="150" height="36" rx="4" fill="#ffffff" stroke="#ef6c00" stroke-width="1.5"/>
+  <text x="775" y="443" text-anchor="middle" font-size="11" font-weight="600" fill="#bf360c">Buck 36V &rarr; 5.1V</text>
+
+  <rect x="700" y="466" width="150" height="36" rx="4" fill="#ffffff" stroke="#ef6c00" stroke-width="1.5"/>
+  <text x="775" y="489" text-anchor="middle" font-size="11" font-weight="600" fill="#bf360c">Buck 36V &rarr; 5V</text>
+
+  <!-- Labels for bucks -->
+  <text x="860" y="443" font-size="9" fill="#78909c">Pi 5 (5A)</text>
+  <text x="860" y="489" font-size="9" fill="#78909c">STM32 + logic (2A)</text>
+
+  <!-- ==================== POWER SOURCE LAYER ==================== -->
+  <rect x="30" y="540" width="1040" height="80" rx="6" fill="#fce4ec" stroke="#ef5350" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="50" y="560" font-size="11" font-weight="600" fill="#c62828" letter-spacing="1">POWER SOURCE</text>
+
+  <!-- Battery -->
+  <rect x="300" y="568" width="300" height="42" rx="5" fill="#ffffff" stroke="#d32f2f" stroke-width="2"/>
+  <text x="450" y="588" text-anchor="middle" font-size="14" font-weight="700" fill="#b71c1c">36V Li-ion Battery Pack</text>
+  <text x="450" y="603" text-anchor="middle" font-size="10" fill="#d32f2f">10S | 42V max | Hoverboard pack + BMS</text>
+
+  <!-- Main Fuse -->
+  <rect x="660" y="570" width="100" height="38" rx="4" fill="#ffcdd2" stroke="#d32f2f" stroke-width="1.5"/>
+  <text x="710" y="593" text-anchor="middle" font-size="11" font-weight="600" fill="#b71c1c">30A Fuse</text>
+
+  <!-- ==================== ACTUATOR LAYER ==================== -->
+  <rect x="30" y="645" width="1040" height="90" rx="6" fill="#f3e5f5" stroke="#ab47bc" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="50" y="665" font-size="11" font-weight="600" fill="#6a1b9a" letter-spacing="1">ACTUATORS</text>
+
+  <!-- Left Motor -->
+  <rect x="100" y="678" width="220" height="48" rx="5" fill="#ffffff" stroke="#8e24aa" stroke-width="2"/>
+  <text x="210" y="699" text-anchor="middle" font-size="13" font-weight="600" fill="#4a148c">Left BLDC Motor</text>
+  <text x="210" y="716" text-anchor="middle" font-size="10" fill="#8e24aa">Hoverboard | 3-phase + Hall A/B/C</text>
+
+  <!-- Right Motor -->
+  <rect x="400" y="678" width="220" height="48" rx="5" fill="#ffffff" stroke="#8e24aa" stroke-width="2"/>
+  <text x="510" y="699" text-anchor="middle" font-size="13" font-weight="600" fill="#4a148c">Right BLDC Motor</text>
+  <text x="510" y="716" text-anchor="middle" font-size="10" fill="#8e24aa">Hoverboard | 3-phase + Hall A/B/C</text>
+
+  <!-- Status indicators -->
+  <rect x="700" y="678" width="130" height="48" rx="5" fill="#ffffff" stroke="#8e24aa" stroke-width="1.5"/>
+  <text x="765" y="699" text-anchor="middle" font-size="12" font-weight="600" fill="#4a148c">Status LED</text>
+  <text x="765" y="714" text-anchor="middle" font-size="10" fill="#8e24aa">+ Buzzer</text>
+
+  <!-- Caster Wheels label -->
+  <rect x="880" y="678" width="160" height="48" rx="5" fill="#f3e5f5" stroke="#ce93d8" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="960" y="699" text-anchor="middle" font-size="12" font-weight="600" fill="#7b1fa2">Rear Casters</text>
+  <text x="960" y="714" text-anchor="middle" font-size="10" fill="#ab47bc">Passive swivel (x2)</text>
+
+  <!-- ==================== CONNECTION ARROWS ==================== -->
+
+  <!-- FlySky TX to RX (wireless) -->
+  <line x1="150" y1="158" x2="140" y2="230" stroke="#2e7d32" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowG)"/>
+  <text x="115" y="195" font-size="9" fill="#2e7d32" font-weight="600">2.4 GHz</text>
+
+  <!-- E-STOP to motor bus -->
+  <line x1="375" y1="158" x2="375" y2="385" stroke="#e53935" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- FlySky RX to STM32 -->
+  <line x1="220" y1="257" x2="290" y2="270" stroke="#1565c0" stroke-width="1.8" marker-end="url(#arrowB)"/>
+  <text x="235" y="252" font-size="9" fill="#1565c0" font-weight="600">iBUS</text>
+
+  <!-- STM32 to Pi -->
+  <line x1="550" y1="287" x2="620" y2="287" stroke="#1565c0" stroke-width="1.5" marker-end="url(#arrowB)"/>
+  <line x1="620" y1="297" x2="550" y2="297" stroke="#1565c0" stroke-width="1.5" marker-end="url(#arrowB)"/>
+  <text x="563" y="282" font-size="9" fill="#1565c0" font-weight="600">USB Serial</text>
+  <text x="563" y="312" font-size="8" fill="#90a4ae">telemetry / cmd_vel</text>
+
+  <!-- Pi to Camera -->
+  <line x1="860" y1="257" x2="920" y2="257" stroke="#1565c0" stroke-width="1.5" marker-end="url(#arrowB)"/>
+  <text x="872" y="250" font-size="9" fill="#1565c0">USB/CSI</text>
+
+  <!-- STM32 to ZS-X11H Left -->
+  <line x1="350" y1="350" x2="220" y2="420" stroke="#2d3436" stroke-width="1.8" marker-end="url(#arrowhead)"/>
+  <text x="260" y="378" font-size="9" fill="#37474f" font-weight="500">PWM/DIR/STOP</text>
+
+  <!-- STM32 to ZS-X11H Right -->
+  <line x1="450" y1="350" x2="520" y2="420" stroke="#2d3436" stroke-width="1.8" marker-end="url(#arrowhead)"/>
+  <text x="460" y="378" font-size="9" fill="#37474f" font-weight="500">PWM/DIR/STOP</text>
+
+  <!-- ZS-X11H to Motors -->
+  <line x1="220" y1="500" x2="210" y2="678" stroke="#6a1b9a" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="185" y="595" font-size="9" fill="#6a1b9a" transform="rotate(-90, 185, 595)">3-phase + Hall</text>
+
+  <line x1="520" y1="500" x2="510" y2="678" stroke="#6a1b9a" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="490" y="595" font-size="9" fill="#6a1b9a" transform="rotate(-90, 490, 595)">3-phase + Hall</text>
+
+  <!-- Battery to fuse -->
+  <line x1="600" y1="589" x2="660" y2="589" stroke="#d32f2f" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Power distribution lines -->
+  <line x1="760" y1="589" x2="800" y2="589" stroke="#d32f2f" stroke-width="2"/>
+  <line x1="800" y1="460" x2="800" y2="589" stroke="#d32f2f" stroke-width="2"/>
+  <line x1="775" y1="456" x2="800" y2="460" stroke="#d32f2f" stroke-width="1.2"/>
+  <line x1="775" y1="502" x2="800" y2="505" stroke="#d32f2f" stroke-width="1.2"/>
+
+  <!-- Power to motor controllers -->
+  <line x1="300" y1="589" x2="220" y2="589" stroke="#d32f2f" stroke-width="1.5"/>
+  <line x1="220" y1="500" x2="220" y2="589" stroke="#d32f2f" stroke-width="1.5"/>
+  <line x1="300" y1="589" x2="300" y2="575" stroke="#d32f2f" stroke-width="1.5"/>
+  <line x1="300" y1="575" x2="520" y2="575" stroke="#d32f2f" stroke-width="1.5"/>
+  <line x1="520" y1="500" x2="520" y2="575" stroke="#d32f2f" stroke-width="1.5"/>
+
+  <!-- STM32 to LED/Buzzer -->
+  <line x1="490" y1="350" x2="765" y2="678" stroke="#78909c" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Operator PC to Pi -->
+  <line x1="600" y1="158" x2="740" y2="225" stroke="#43a047" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrowG)"/>
+  <text x="650" y="185" font-size="9" fill="#43a047">SSH / WiFi</text>
+
+  <!-- ==================== LEGEND ==================== -->
+  <rect x="30" y="755" width="1040" height="55" rx="5" fill="#f5f5f5" stroke="#e0e0e0" stroke-width="1"/>
+
+  <line x1="55" y1="778" x2="85" y2="778" stroke="#2d3436" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="92" y="782" font-size="10" fill="#37474f">Signal</text>
+
+  <line x1="155" y1="778" x2="185" y2="778" stroke="#d32f2f" stroke-width="2.5"/>
+  <text x="192" y="782" font-size="10" fill="#37474f">Power (36V)</text>
+
+  <line x1="285" y1="778" x2="315" y2="778" stroke="#2e7d32" stroke-width="1.8" stroke-dasharray="6,4"/>
+  <text x="322" y="782" font-size="10" fill="#37474f">Wireless</text>
+
+  <line x1="405" y1="778" x2="435" y2="778" stroke="#78909c" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="442" y="782" font-size="10" fill="#37474f">Optional / Future</text>
+
+  <rect x="555" y="770" width="14" height="14" rx="2" fill="#ffffff" stroke="#1976d2" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="577" y="782" font-size="10" fill="#37474f">V2+ component</text>
+
+  <text x="720" y="782" font-size="10" fill="#37474f" font-weight="600">STM32 = Safety Authority</text>
+
+  <text x="920" y="782" font-size="10" fill="#9e9e9e">AgriBot | UM6P</text>
+</svg>

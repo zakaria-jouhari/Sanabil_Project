@@ -1,0 +1,201 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 780" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="1" dy="1" stdDeviation="2" flood-opacity="0.10"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#37474f"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="780" fill="#fafafa" rx="8"/>
+
+  <!-- Title -->
+  <text x="480" y="36" text-anchor="middle" font-size="22" font-weight="700" fill="#1a1a2e" letter-spacing="0.5">STM32 Firmware Architecture</text>
+  <text x="480" y="56" text-anchor="middle" font-size="12" fill="#636e72">STM32F767ZI | V1 Teleoperation | Layered Design</text>
+
+  <!-- ==================== APPLICATION LAYER ==================== -->
+  <rect x="40" y="78" width="880" height="195" rx="6" fill="#e8eaf6" stroke="#5c6bc0" stroke-width="2" filter="url(#shadow)"/>
+  <text x="60" y="98" font-size="12" font-weight="700" fill="#283593" letter-spacing="1.5">APPLICATION</text>
+
+  <!-- main() / super loop -->
+  <rect x="70" y="108" width="130" height="42" rx="4" fill="#ffffff" stroke="#3f51b5" stroke-width="1.5"/>
+  <text x="135" y="127" text-anchor="middle" font-size="12" font-weight="700" fill="#1a237e">main()</text>
+  <text x="135" y="142" text-anchor="middle" font-size="9" fill="#5c6bc0">super loop @ 50 Hz</text>
+
+  <!-- State Machine -->
+  <rect x="240" y="108" width="180" height="155" rx="5" fill="#ffffff" stroke="#3f51b5" stroke-width="2"/>
+  <rect x="240" y="108" width="180" height="26" rx="5" fill="#3f51b5"/>
+  <rect x="240" y="128" width="180" height="6" fill="#3f51b5"/>
+  <text x="330" y="126" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">State Machine</text>
+
+  <!-- States inside -->
+  <rect x="255" y="142" width="68" height="22" rx="3" fill="#e8eaf6" stroke="#7986cb" stroke-width="1"/>
+  <text x="289" y="157" text-anchor="middle" font-size="9" font-weight="600" fill="#283593">BOOT</text>
+
+  <rect x="337" y="142" width="68" height="22" rx="3" fill="#e8eaf6" stroke="#7986cb" stroke-width="1"/>
+  <text x="371" y="157" text-anchor="middle" font-size="9" font-weight="600" fill="#283593">DISARMED</text>
+
+  <rect x="255" y="172" width="68" height="22" rx="3" fill="#c5cae9" stroke="#5c6bc0" stroke-width="1.2"/>
+  <text x="289" y="187" text-anchor="middle" font-size="8" font-weight="600" fill="#1a237e">MANUAL</text>
+
+  <rect x="337" y="172" width="68" height="22" rx="3" fill="#c5cae9" stroke="#5c6bc0" stroke-width="1.2"/>
+  <text x="371" y="187" text-anchor="middle" font-size="8" font-weight="600" fill="#1a237e">AUTO</text>
+
+  <rect x="295" y="202" width="72" height="22" rx="3" fill="#ffcdd2" stroke="#e53935" stroke-width="1.2"/>
+  <text x="331" y="217" text-anchor="middle" font-size="9" font-weight="700" fill="#b71c1c">FAULT</text>
+
+  <!-- Safety Module -->
+  <rect x="460" y="108" width="145" height="65" rx="5" fill="#ffffff" stroke="#e53935" stroke-width="2"/>
+  <text x="532" y="132" text-anchor="middle" font-size="12" font-weight="700" fill="#c62828">Safety</text>
+  <text x="532" y="148" text-anchor="middle" font-size="9" fill="#e53935">Fault detection</text>
+  <text x="532" y="161" text-anchor="middle" font-size="9" fill="#e53935">E-stop + watchdog</text>
+
+  <!-- Mixer -->
+  <rect x="460" y="185" width="145" height="65" rx="5" fill="#ffffff" stroke="#3f51b5" stroke-width="1.5"/>
+  <text x="532" y="208" text-anchor="middle" font-size="12" font-weight="700" fill="#1a237e">Mixer</text>
+  <text x="532" y="224" text-anchor="middle" font-size="9" fill="#5c6bc0">Diff-drive mixing</text>
+  <text x="532" y="237" text-anchor="middle" font-size="9" fill="#5c6bc0">Accel limiter</text>
+
+  <!-- Telemetry -->
+  <rect x="645" y="108" width="130" height="42" rx="5" fill="#ffffff" stroke="#3f51b5" stroke-width="1.5"/>
+  <text x="710" y="130" text-anchor="middle" font-size="12" font-weight="700" fill="#1a237e">Telemetry</text>
+  <text x="710" y="143" text-anchor="middle" font-size="9" fill="#5c6bc0">Status broadcast</text>
+
+  <!-- Config -->
+  <rect x="800" y="108" width="100" height="42" rx="5" fill="#ffffff" stroke="#3f51b5" stroke-width="1.5"/>
+  <text x="850" y="130" text-anchor="middle" font-size="12" font-weight="700" fill="#1a237e">Config</text>
+  <text x="850" y="143" text-anchor="middle" font-size="9" fill="#5c6bc0">app_config.h</text>
+
+  <!-- ==================== DRIVERS LAYER ==================== -->
+  <rect x="40" y="298" width="880" height="135" rx="6" fill="#e0f2f1" stroke="#26a69a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="60" y="318" font-size="12" font-weight="700" fill="#00695c" letter-spacing="1.5">DRIVERS</text>
+
+  <!-- RC Input Driver -->
+  <rect x="70" y="332" width="130" height="55" rx="5" fill="#ffffff" stroke="#00897b" stroke-width="1.5"/>
+  <text x="135" y="353" text-anchor="middle" font-size="12" font-weight="600" fill="#004d40">RC Input</text>
+  <text x="135" y="368" text-anchor="middle" font-size="9" fill="#00897b">drv_rc_input</text>
+  <text x="135" y="380" text-anchor="middle" font-size="8" fill="#80cbc4">iBUS / PWM parse</text>
+
+  <!-- Motor Driver -->
+  <rect x="230" y="332" width="130" height="55" rx="5" fill="#ffffff" stroke="#00897b" stroke-width="1.5"/>
+  <text x="295" y="353" text-anchor="middle" font-size="12" font-weight="600" fill="#004d40">Motor</text>
+  <text x="295" y="368" text-anchor="middle" font-size="9" fill="#00897b">drv_motor</text>
+  <text x="295" y="380" text-anchor="middle" font-size="8" fill="#80cbc4">ZS-X11H interface</text>
+
+  <!-- Battery Driver -->
+  <rect x="390" y="332" width="130" height="55" rx="5" fill="#ffffff" stroke="#00897b" stroke-width="1.5"/>
+  <text x="455" y="353" text-anchor="middle" font-size="12" font-weight="600" fill="#004d40">Battery</text>
+  <text x="455" y="368" text-anchor="middle" font-size="9" fill="#00897b">drv_battery</text>
+  <text x="455" y="380" text-anchor="middle" font-size="8" fill="#80cbc4">ADC + divider</text>
+
+  <!-- Serial Protocol Driver -->
+  <rect x="550" y="332" width="140" height="55" rx="5" fill="#ffffff" stroke="#00897b" stroke-width="1.5"/>
+  <text x="620" y="353" text-anchor="middle" font-size="12" font-weight="600" fill="#004d40">Serial Proto</text>
+  <text x="620" y="368" text-anchor="middle" font-size="9" fill="#00897b">drv_serial_proto</text>
+  <text x="620" y="380" text-anchor="middle" font-size="8" fill="#80cbc4">Pi packet framing</text>
+
+  <!-- E-Stop Driver -->
+  <rect x="720" y="332" width="120" height="55" rx="5" fill="#ffffff" stroke="#00897b" stroke-width="1.5"/>
+  <text x="780" y="353" text-anchor="middle" font-size="12" font-weight="600" fill="#004d40">E-Stop</text>
+  <text x="780" y="368" text-anchor="middle" font-size="9" fill="#00897b">drv_estop</text>
+  <text x="780" y="380" text-anchor="middle" font-size="8" fill="#80cbc4">GPIO input</text>
+
+  <!-- ==================== HAL / BSP LAYER ==================== -->
+  <rect x="40" y="458" width="880" height="100" rx="6" fill="#fff8e1" stroke="#ffb300" stroke-width="2" filter="url(#shadow)"/>
+  <text x="60" y="478" font-size="12" font-weight="700" fill="#e65100" letter-spacing="1.5">HAL / BSP (STM32CubeMX Generated)</text>
+
+  <!-- Peripheral boxes -->
+  <rect x="70" y="492" width="85" height="38" rx="4" fill="#ffffff" stroke="#ffa000" stroke-width="1.5"/>
+  <text x="112" y="510" text-anchor="middle" font-size="11" font-weight="600" fill="#e65100">UART</text>
+  <text x="112" y="523" text-anchor="middle" font-size="8" fill="#ffb300">iBUS + Pi</text>
+
+  <rect x="175" y="492" width="85" height="38" rx="4" fill="#ffffff" stroke="#ffa000" stroke-width="1.5"/>
+  <text x="217" y="510" text-anchor="middle" font-size="11" font-weight="600" fill="#e65100">TIM PWM</text>
+  <text x="217" y="523" text-anchor="middle" font-size="8" fill="#ffb300">Motor out</text>
+
+  <rect x="280" y="492" width="85" height="38" rx="4" fill="#ffffff" stroke="#ffa000" stroke-width="1.5"/>
+  <text x="322" y="510" text-anchor="middle" font-size="11" font-weight="600" fill="#e65100">TIM IC</text>
+  <text x="322" y="523" text-anchor="middle" font-size="8" fill="#ffb300">RC capture</text>
+
+  <rect x="385" y="492" width="85" height="38" rx="4" fill="#ffffff" stroke="#ffa000" stroke-width="1.5"/>
+  <text x="427" y="510" text-anchor="middle" font-size="11" font-weight="600" fill="#e65100">ADC</text>
+  <text x="427" y="523" text-anchor="middle" font-size="8" fill="#ffb300">Battery</text>
+
+  <rect x="490" y="492" width="85" height="38" rx="4" fill="#ffffff" stroke="#ffa000" stroke-width="1.5"/>
+  <text x="532" y="510" text-anchor="middle" font-size="11" font-weight="600" fill="#e65100">GPIO</text>
+  <text x="532" y="523" text-anchor="middle" font-size="8" fill="#ffb300">DIR/STOP/BRK</text>
+
+  <rect x="595" y="492" width="85" height="38" rx="4" fill="#ffffff" stroke="#ffa000" stroke-width="1.5"/>
+  <text x="637" y="510" text-anchor="middle" font-size="11" font-weight="600" fill="#e65100">DMA</text>
+  <text x="637" y="523" text-anchor="middle" font-size="8" fill="#ffb300">UART + ADC</text>
+
+  <rect x="700" y="492" width="85" height="38" rx="4" fill="#ffffff" stroke="#ffa000" stroke-width="1.5"/>
+  <text x="742" y="510" text-anchor="middle" font-size="11" font-weight="600" fill="#e65100">IWDG</text>
+  <text x="742" y="523" text-anchor="middle" font-size="8" fill="#ffb300">Watchdog</text>
+
+  <rect x="805" y="492" width="95" height="38" rx="4" fill="#ffffff" stroke="#ffa000" stroke-width="1.5"/>
+  <text x="852" y="510" text-anchor="middle" font-size="11" font-weight="600" fill="#e65100">NVIC</text>
+  <text x="852" y="523" text-anchor="middle" font-size="8" fill="#ffb300">Interrupts</text>
+
+  <!-- ==================== I/O LAYER ==================== -->
+  <rect x="40" y="583" width="880" height="75" rx="6" fill="#efebe9" stroke="#8d6e63" stroke-width="2" filter="url(#shadow)"/>
+  <text x="60" y="603" font-size="12" font-weight="700" fill="#4e342e" letter-spacing="1.5">I/O</text>
+
+  <rect x="70" y="615" width="100" height="32" rx="4" fill="#ffffff" stroke="#795548" stroke-width="1.2"/>
+  <text x="120" y="635" text-anchor="middle" font-size="10" font-weight="600" fill="#4e342e">FlySky RX</text>
+
+  <rect x="195" y="615" width="120" height="32" rx="4" fill="#ffffff" stroke="#795548" stroke-width="1.2"/>
+  <text x="255" y="635" text-anchor="middle" font-size="10" font-weight="600" fill="#4e342e">ZS-X11H (x2)</text>
+
+  <rect x="340" y="615" width="100" height="32" rx="4" fill="#ffffff" stroke="#795548" stroke-width="1.2"/>
+  <text x="390" y="635" text-anchor="middle" font-size="10" font-weight="600" fill="#4e342e">Batt Divider</text>
+
+  <rect x="465" y="615" width="130" height="32" rx="4" fill="#ffffff" stroke="#795548" stroke-width="1.2"/>
+  <text x="530" y="635" text-anchor="middle" font-size="10" font-weight="600" fill="#4e342e">Raspberry Pi 5</text>
+
+  <rect x="620" y="615" width="100" height="32" rx="4" fill="#ffffff" stroke="#795548" stroke-width="1.2"/>
+  <text x="670" y="635" text-anchor="middle" font-size="10" font-weight="600" fill="#4e342e">E-Stop SW</text>
+
+  <rect x="745" y="615" width="80" height="32" rx="4" fill="#ffffff" stroke="#795548" stroke-width="1.2"/>
+  <text x="785" y="635" text-anchor="middle" font-size="10" font-weight="600" fill="#4e342e">LEDs</text>
+
+  <rect x="845" y="615" width="60" height="32" rx="4" fill="#ffffff" stroke="#795548" stroke-width="1.2"/>
+  <text x="875" y="635" text-anchor="middle" font-size="10" font-weight="600" fill="#4e342e">Buzzer</text>
+
+  <!-- ==================== MCU BAR ==================== -->
+  <rect x="200" y="685" width="560" height="38" rx="5" fill="#263238" stroke="#37474f" stroke-width="2" filter="url(#shadow)"/>
+  <text x="480" y="709" text-anchor="middle" font-size="15" font-weight="700" fill="#eceff1" letter-spacing="1">STM32F767ZI  |  ARM Cortex-M7  |  216 MHz</text>
+
+  <!-- ==================== VERTICAL CONNECTION LINES ==================== -->
+  <!-- App to Drivers -->
+  <line x1="135" y1="150" x2="135" y2="332" stroke="#37474f" stroke-width="1.2" marker-end="url(#arr)"/>
+  <line x1="295" y1="250" x2="295" y2="332" stroke="#37474f" stroke-width="1.2" marker-end="url(#arr)"/>
+  <line x1="455" y1="250" x2="455" y2="332" stroke="#37474f" stroke-width="1.2" marker-end="url(#arr)"/>
+  <line x1="620" y1="250" x2="620" y2="332" stroke="#37474f" stroke-width="1.2" marker-end="url(#arr)"/>
+  <line x1="780" y1="250" x2="780" y2="332" stroke="#37474f" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- Drivers to HAL -->
+  <line x1="135" y1="387" x2="112" y2="492" stroke="#8d6e63" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="295" y1="387" x2="217" y2="492" stroke="#8d6e63" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="295" y1="387" x2="322" y2="492" stroke="#8d6e63" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="455" y1="387" x2="427" y2="492" stroke="#8d6e63" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="620" y1="387" x2="637" y2="492" stroke="#8d6e63" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="780" y1="387" x2="532" y2="492" stroke="#8d6e63" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- ==================== LEGEND ==================== -->
+  <rect x="40" y="738" width="880" height="32" rx="4" fill="#f5f5f5" stroke="#e0e0e0" stroke-width="1"/>
+  <rect x="60" y="748" width="30" height="12" rx="2" fill="#e8eaf6" stroke="#5c6bc0" stroke-width="1"/>
+  <text x="100" y="758" font-size="10" fill="#37474f">Application</text>
+  <rect x="175" y="748" width="30" height="12" rx="2" fill="#e0f2f1" stroke="#26a69a" stroke-width="1"/>
+  <text x="215" y="758" font-size="10" fill="#37474f">Drivers</text>
+  <rect x="275" y="748" width="30" height="12" rx="2" fill="#fff8e1" stroke="#ffb300" stroke-width="1"/>
+  <text x="315" y="758" font-size="10" fill="#37474f">HAL (CubeMX)</text>
+  <rect x="405" y="748" width="30" height="12" rx="2" fill="#efebe9" stroke="#8d6e63" stroke-width="1"/>
+  <text x="445" y="758" font-size="10" fill="#37474f">I/O</text>
+  <rect x="490" y="748" width="30" height="12" rx="2" fill="#263238" stroke="#37474f" stroke-width="1"/>
+  <text x="530" y="758" font-size="10" fill="#37474f">Hardware</text>
+
+  <text x="870" y="758" font-size="10" fill="#9e9e9e">AgriBot | UM6P</text>
+</svg>
