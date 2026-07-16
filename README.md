@@ -94,6 +94,10 @@ Full power/signal architecture: [docs/system_diagram.pdf](docs/system_diagram.pd
 **Full-vehicle drive demo** — the assembled rover under FlySky RC control:
 [▶ docs/media/rc_teleop_demo.mp4](docs/media/rc_teleop_demo.mp4)
 
+
+https://github.com/user-attachments/assets/5515135c-1187-4567-86d2-14c21d44d0c6
+
+
 Spring-centered sticks (CH1 steer / CH2 speed) → stop-on-release; a 100 ms RC failsafe stops both
 motors on signal loss. An arm button (PE15) toggles drive on/off — the robot powers up **disarmed**.
 Firmware sources in `firmware/stm32/Core/` — see `firmware/stm32/RC_DRIVE_NOTES.md` for the full
