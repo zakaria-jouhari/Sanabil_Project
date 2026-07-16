@@ -11,8 +11,8 @@ navigation stack and a physical hardware/firmware prototype.
 
 ## Platform
 
-Differential-drive base: two driven front wheels and two rear casters, an aluminium-extrusion
-frame with 3D-printed joints and mounts.
+Differential-drive base: two driven front wheels and two rear casters on a **welded steel
+frame**, with 3D-printed brackets and mounts for the electronics.
 
 <table>
 <tr>
@@ -20,6 +20,8 @@ frame with 3D-printed joints and mounts.
 <td><img src="docs/images/platform_dims.png" width="420"><br><sub>(b) Body dimensions (mm): side view (left), front view (right)</sub></td>
 </tr>
 </table>
+
+<img src="docs/images/chassis_assembled.jpg" width="600"><br><sub>(c) Welded steel chassis assembled — drive wheels, rear casters and electronics fitted</sub>
 
 ---
 
@@ -66,9 +68,13 @@ Physical prototype: hoverboard BLDC drive + STM32 low-level control + Raspberry 
 |-----------|--------|
 | Drive | 2× hoverboard BLDC motors (36 V) + 2 rear casters (differential) |
 | Motor controllers | 2× ZS-X11H (6–60 V, 400 W, Hall commutation) |
-| Battery | 36 V hoverboard Li-ion (10S, 42 V max) |
+| Motor power | 36 V hoverboard Li-ion (10S, 42 V max) — dedicated motor bus |
+| Logic power | 80 W solar panel + 24 V battery → PWM charge controller (12/24 V, 10 A) → 2× LM2596 buck (Pi 5, STM32) |
 | Compute | STM32F767ZI Nucleo (safety + motor control) · Raspberry Pi 5 (perception) |
+| Sensors | RGB night-vision camera (CSI) · MPU6050 IMU |
 | RC | FlySky i6 + FS-iA6B receiver (iBUS) |
+
+Full power/signal architecture: [docs/system_diagram.pdf](docs/system_diagram.pdf)
 
 **Teleoperation control chain:**
 
@@ -82,8 +88,11 @@ Physical prototype: hoverboard BLDC drive + STM32 low-level control + Raspberry 
 |------|--------|
 | iBUS RC reception (DMA + IDLE-line, USART6) | ✅ Verified — ~135 frame/s, 0 errors |
 | Debug console (ST-LINK VCP, USART3) | ✅ Working |
-| Motor control (`motor.c`, diff-drive mix + failsafe) | ✅ Working — diff-drive verified (straight + turn) |
+| Motor control (`motor.c`, diff-drive mix + failsafe) | ✅ Working — **full-vehicle teleoperation verified** |
 | Arm button (momentary, PE15) | ✅ Implemented, ⏳ untested |
+
+**Full-vehicle drive demo** — the assembled rover under FlySky RC control:
+[▶ docs/media/rc_teleop_demo.mp4](docs/media/rc_teleop_demo.mp4)
 
 Spring-centered sticks (CH1 steer / CH2 speed) → stop-on-release; a 100 ms RC failsafe stops both
 motors on signal loss. An arm button (PE15) toggles drive on/off — the robot powers up **disarmed**.
@@ -110,8 +119,8 @@ hardware/     Schematics and wiring
 
 ## Roadmap
 
-- **V1** — RC teleoperation *(current)*
-- **V2** — Pi `cmd_vel` over serial
+- **V1** — RC teleoperation ✅ *— full-vehicle drive demonstrated*
+- **V2** — Pi `cmd_vel` over serial *(next)*
 - **V3** — Odometry + EKF on hardware
 - **V4** — Vision-based crop-row navigation
 
