@@ -1,4 +1,4 @@
-# Crop-Row Rover
+#MerKal_Project
 
 A low-cost autonomous ground robot for **crop-row navigation**. The system is designed
 simulation-first in Gazebo/ROS 2, then brought onto a physical differential-drive prototype.
