@@ -12,9 +12,7 @@
   <img src="https://img.shields.io/badge/platform-PRBonn%2Fagribot%20(BSD--2--Clause)-2A2724" alt="license">
 </p>
 
-<p align="center">
-  <img src="assets/merkal-lockup-on-dark.svg" width="520" alt="MerKal lockup">
-</p>
+
 
 ---
 
