@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="300" viewBox="0 0 900 300">
+  <rect width="900" height="300" fill="#2a2724"></rect>
+  <g transform="translate(70,90)">
+    <path d="M 60 108 L 30 20 L 46 20 Z" fill="#f7f4ef"></path>
+    <path d="M 60 108 L 52 14 L 68 14 Z" fill="#6cc98c"></path>
+    <path d="M 60 108 L 90 20 L 74 20 Z" fill="#f7f4ef"></path>
+    <circle cx="60" cy="108" r="6" fill="#6cc98c"></circle>
+  </g>
+  <text x="220" y="150" font-family="Space Grotesk, sans-serif" font-size="72" font-weight="700" fill="#f7f4ef" letter-spacing="-1">MerKal</text>
+  <text x="222" y="185" font-family="IBM Plex Sans, sans-serif" font-size="18" letter-spacing="3" fill="#b7ada2">NAVIGATING THE LAND - ⰴⱤⰴⱡ</text>
+</svg>
