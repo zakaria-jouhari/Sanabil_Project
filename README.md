@@ -1,116 +1,129 @@
-#MerKal_Project
+# MerKal
 
-A low-cost autonomous ground robot for **crop-row navigation**. The system is designed
-simulation-first in Gazebo/ROS 2, then brought onto a physical differential-drive prototype.
+**Autonomous crop-row navigation for the 90% of farms robotics companies ignore.**
 
-The mechanical platform is based on the open-source **[PRBonn/agribot](https://github.com/PRBonn/agribot)**
-project (Photogrammetry & Robotics Bonn, BSD-2-Clause). This repo focuses on the simulation
-navigation stack and a physical hardware/firmware prototype.
+MerKal is a low-cost autonomous ground robot that stays in the row when GPS can't. It fuses commodity GPS, IMU, and a single RGB camera — no RTK, no cellular dependency — to deliver centimeter-class in-row tracking on hardware a small or mid-size Moroccan farm can actually afford.
 
----
+[![Status](https://img.shields.io/badge/status-prototype%20%7C%20bench%20integration-C06A3E)](#roadmap)
+[![Stack](https://img.shields.io/badge/stack-ROS%202%20%7C%20STM32%20%7C%20Raspberry%20Pi-3F9457)](#hardware)
+[![License](https://img.shields.io/badge/platform-PRBonn%2Fagribot%20(BSD--2--Clause)-2A2724)](https://github.com/PRBonn/agribot)
 
-## Platform
-
-Differential-drive base: two driven front wheels and two rear casters on a **welded steel
-frame**, with 3D-printed brackets and mounts for the electronics.
-
-<table>
-<tr>
-<td><img src="docs/images/platform_cad.png" width="380"><br><sub>(a) CAD model (Fusion 360 / SolidWorks)</sub></td>
-<td><img src="docs/images/platform_dims.png" width="420"><br><sub>(b) Body dimensions (mm): side view (left), front view (right)</sub></td>
-</tr>
-</table>
-
-<img src="docs/images/chassis_assembled.jpg" width="600"><br><sub>(c) Welded steel chassis assembled — drive wheels, rear casters and electronics fitted</sub>
+<p align="center"><img src="assets/merkal-lockup-on-dark.svg" width="480" alt="MerKal — Navigating the Land"></p>
 
 ---
 
-## Simulation
+## The problem
 
-The robot, sensors and a crop-row field are modelled in **Gazebo (Harmonic) + ROS 2**. The robot
-follows a planned lawnmower path through the rows, with end-of-row detection, headland turns and
-re-entry into the next row.
+GPS fails exactly where precision matters most.
 
-![Simulation run — Gazebo viewport](docs/images/sim_demo.png)
+| | |
+|---|---|
+| **30–75 cm** | typical row spacing (cereals → maize) |
+| **×10 to ×50** | GPS error growth, fix → degraded float |
+| **1,200 ha** | scale of a real visited estate with weak cellular coverage |
 
----
+RTK-float error (~50 cm) can exceed the entire row spacing — the difference between a clean pass and a robot driving over the crop. Existing commercial ag-robots automate harvesting, weeding, and spraying, but are priced for large capitalized operations, not the small Moroccan exploitant.
 
-## Perception — U-Net crop-row detector
+## The solution
 
-A lightweight **U-Net** turns each camera frame into a crop-row mask, from which the lateral
-offset and heading error relative to the row are extracted.
+Fuse everything cheap; let vision cover for GPS when it degrades.
 
+- **Sensors:** GPS + IMU + wheel odometry + one RGB camera. No RTK hardware.
+- **EKF** fuses all three into a single pose estimate, weighted by measurement confidence.
+- **U-Net row detector** injects a vision-based lateral correction when GPS drifts.
+- **Pure Pursuit** executes a planned lawnmower path, row by row.
+- Graceful degradation: vision compensates when GPS is bad, never interferes when GPS is good.
+
+| | |
+|---|---|
+| **~3 cm** | EKF pose accuracy (good localization) |
+| **4.35 cm** | measured in-row lateral tracking |
+| **0.78 IoU** | U-Net row-detector validation |
+
+## Validated in simulation first
+
+Full Gazebo/ROS 2 simulation-first pipeline — robot, sensors, and crop field modeled to run hundreds of paths under controlled GPS degradation (injected noise + bias) before any hardware risk. **Result:** vision fusion improves in-row accuracy under GPS noise, with the gain growing as noise increases — directly reducing technical risk ahead of field trials.
+
+![Simulation run](docs/images/sim_demo.png)
 ![U-Net architecture](docs/images/unet_arch.png)
 
-- **Input/output:** 256×256 RGB → 256×256 single-channel probability mask
-- **Encoder/decoder:** 32 → 64 → 128 → 256 → 512 (bottleneck), with skip connections
-- **Loss:** Dice + binary cross-entropy · **Optimizer:** Adam (lr 1e-3, batch 8)
-- **Validation IoU ≈ 0.78**, trained on auto-labelled Gazebo frames
+## Market — confirmed on the ground, not on paper
 
----
+Two field visits and direct interviews (March 2026) with operators of very different scale:
 
-## Sensor fusion
+| | Small farm | Large estate |
+|---|---|---|
+| Profile | Mixed crops | ~1,200 ha, orange groves |
+| Priority task | Seasonal manual weeding | Orchard clearing, pruning |
+| Price anchor | Worker wage ~4,500 DH/mo | Announced budget ~70–80k DH |
+| Purchase condition | Live on-site demo | Live on-site demo |
 
-GPS, IMU and wheel odometry are fused with the U-Net measurement in an Extended Kalman Filter for
-localization and in-row guidance.
+Both operators evaluate the machine against the labor cost it replaces — not its technical sophistication.
 
-> ℹ️ The fusion design and implementation details are **not shared publicly** in this repository.
+## Why now — the gap is accessibility, not technology
 
----
+| Approach | Strength | Limit |
+|---|---|---|
+| High-end RTK only | Centimeter precision, simple global reference | Thousands of dollars; still fails under obstruction / correction loss |
+| Vision only | No satellite dependency, cheap sensor | Fragile in occluded/low-light rows, weak at row-end and row-switch |
+| **GPS + IMU + odometry + vision (MerKal)** | Keeps a global reference, adds local correction, degrades gracefully, commodity sensors only | Needs calibration, measurement validation, failure handling |
+| Commercial ag-robots | Proven, capable | Built for large capitalized operations only |
 
-## Hardware implementation
+## Business model
 
-Physical prototype: hoverboard BLDC drive + STM32 low-level control + Raspberry Pi for perception.
+Over 4 years, the labor a robot could replace is worth ~216,000 DH (4,500 DH/mo × 12 × 4) — the theoretical ceiling. A partially-assistive robot must price well under it.
+
+| Band | Range | Read |
+|---|---|---|
+| Low-cost target | < 35,000 DH | Strong small-farm fit |
+| Operator anchor | ~54,000 DH | ~1 year of wages over a 4-year life |
+| Financing / service | 70,000–120,000 DH | Reachable via leasing or paid service |
+| Above target | > 120,000 DH | Misaligned with small-farm budgets |
+
+Avoiding survey-grade RTK hardware is the core economic decision — it keeps the sensor budget inside these bands while vision fusion recovers most of the lost precision. Given demo-before-buy behavior, a service, paid pilot, or leasing model likely beats direct sale.
+
+## Hardware
+
+Hoverboard BLDC drive + STM32 low-level control + Raspberry Pi 5 perception.
 
 ![System block diagram](docs/images/hw_block_diagram.png)
 
 | Subsystem | Detail |
-|-----------|--------|
+|---|---|
 | Drive | 2× hoverboard BLDC motors (36 V) + 2 rear casters (differential) |
 | Motor controllers | 2× ZS-X11H (6–60 V, 400 W, Hall commutation) |
 | Motor power | 36 V hoverboard Li-ion (10S, 42 V max) — dedicated motor bus |
-| Logic power | 80 W solar panel + 24 V battery → PWM charge controller (12/24 V, 10 A) → 2× LM2596 buck (Pi 5, STM32) |
+| Logic power | 80 W solar panel + 24 V battery → PWM charge controller → 2× LM2596 buck (Pi 5, STM32) |
 | Compute | STM32F767ZI Nucleo (safety + motor control) · Raspberry Pi 5 (perception) |
 | Sensors | RGB night-vision camera (CSI) · MPU6050 IMU |
 | RC | FlySky i6 + FS-iA6B receiver (iBUS) |
 
-Full power/signal architecture: [docs/system_diagram.pdf](docs/system_diagram.pdf)
+**Firmware status:** iBUS RC reception ✅ verified (~135 frame/s, 0 errors) · Motor control ✅ full-vehicle teleoperation verified · Arm button ✅ implemented, testing pending.
 
-**Teleoperation control chain:**
+<p align="center"><img src="docs/images/chassis_assembled.jpg" width="520" alt="Assembled chassis"></p>
 
-![Control chain](docs/images/control_chain.png)
+## Roadmap
 
-![Bench setup](docs/images/hw_bench.png)
+- [x] **V1 — RC teleoperation** — full-vehicle drive demonstrated
+- [ ] **V2 — Autonomy handoff** — Pi `cmd_vel` over serial *(next)*
+- [ ] **V3 — State estimation on hardware** — odometry + EKF
+- [ ] **V4 — Vision-guided navigation** — closed-loop crop-row following
 
-### Firmware status (STM32)
+**Next milestone:** a lawnmower-pattern field demo, 2 rows, at a farm already visited.
 
-| Item | Status |
-|------|--------|
-| iBUS RC reception (DMA + IDLE-line, USART6) | ✅ Verified — ~135 frame/s, 0 errors |
-| Debug console (ST-LINK VCP, USART3) | ✅ Working |
-| Motor control (`motor.c`, diff-drive mix + failsafe) | ✅ Working — **full-vehicle teleoperation verified** |
-| Arm button (momentary, PE15) | ✅ Implemented, ⏳ untested |
+## Traction
 
-**Full-vehicle drive demo** — the assembled rover under FlySky RC control:
-[▶ docs/media/rc_teleop_demo.mp4](docs/media/rc_teleop_demo.mp4)
+1. ✅ **Field research** — two real farm visits, need and price confirmed
+2. ✅ **Simulation validated** — full navigation stack tested under controlled GPS degradation
+3. 🔄 **Physical prototype** — chassis assembled, hardware integrated, bench integration in progress
+4. ⏭ **Field demo** — next step
 
+## Team
 
-https://github.com/user-attachments/assets/5515135c-1187-4567-86d2-14c21d44d0c6
+**Zakaria Jouhari** — Founder. Software (navigation, sensor fusion, vision) and hardware integration.
+Electrical Engineering, Embedded Systems (ENSA Kénitra) · Research Engineer Intern, UM6P College of Computing · UM6P / OCP / OCP NutriCrops ecosystem.
 
-
-Spring-centered sticks (CH1 steer / CH2 speed) → stop-on-release; a 100 ms RC failsafe stops both
-motors on signal loss. An arm button (PE15) toggles drive on/off — the robot powers up **disarmed**.
-Firmware sources in `firmware/stm32/Core/` — see `firmware/stm32/RC_DRIVE_NOTES.md` for the full
-design log.
-
-<table>
-<tr>
-<td><img src="docs/images/rc_console.png" width="380"><br><sub>iBUS console: 0 errors, channels live</sub></td>
-<td><img src="docs/images/rc_drive.jpg" width="380"><br><sub>Differential-drive bring-up: both hoverboard BLDC wheels driven under RC control</sub></td>
-</tr>
-</table>
-
----
+Solo-founded at this stage — actively looking to build out the team across technical, business, and agronomy expertise.
 
 ## Repo structure
 
@@ -121,14 +134,6 @@ software/     Raspberry Pi software + tools
 hardware/     Schematics and wiring
 ```
 
-## Roadmap
-
-- **V1** — RC teleoperation ✅ *— full-vehicle drive demonstrated*
-- **V2** — Pi `cmd_vel` over serial *(next)*
-- **V3** — Odometry + EKF on hardware
-- **V4** — Vision-based crop-row navigation
-
 ---
 
-*Mechanical platform adapted from [PRBonn/agribot](https://github.com/PRBonn/agribot) (BSD-2-Clause).*
-</content>
+*Mechanical platform adapted from [PRBonn/agribot](https://github.com/PRBonn/agribot) (BSD-2-Clause). Sensor-fusion design details are not shared publicly in this repository.*
